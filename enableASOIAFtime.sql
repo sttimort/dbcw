@@ -101,7 +101,6 @@ BEGIN
   t1_arr = ASOIAFtimeToIntArray(t1);
   t2_arr = ASOIAFtimeToIntArray(t2);
 
-  RAISE info 'Comparing: % and %', t1_arr, t2_arr;
   WHILE (NOT NULLFound) AND i <= 6 LOOP 
     IF t1_arr[i] IS NULL THEN
       NULLFound = true;
@@ -118,7 +117,6 @@ BEGIN
   END LOOP;
 
   IF NULLFound THEN -- if at least one of the time string is not specified
-    RAISE INFO 'Not all fields are specified';
     IF t1_arr[7] > t2_arr[7] THEN -- means time1 is AC and time2 is BC
       RETURN 1;
     ELSE IF t1_arr[7] < t2_arr[7] THEN -- means time1 is BC and time is AC
@@ -126,7 +124,6 @@ BEGIN
     END IF; END IF;
 
     minCPart = ASOIAFfindMaxComparablePartIndex(t1_arr, t2_arr);
-    RAISE INFO 'minCPart: %', minCPart;
     IF minCPart = 0 THEN
       RETURN -1; -- -1 means ambigues
     END IF;
@@ -148,7 +145,6 @@ BEGIN
     END IF; END IF;
   END IF;
 
-  RAISE INFO 'All parts specified';
   asoiafTmstmp1 = (t1_arr[1]*10^10 + t1_arr[2]*10^8 + t1_arr[3]*10^6 + t1_arr[4]*10^4 + t1_arr[5]*10^2 + t1_arr[6])*t1_arr[7];
   asoiafTmstmp2 = (t2_arr[1]*10^10 + t2_arr[2]*10^8 + t2_arr[3]*10^6 + t2_arr[4]*10^4 + t2_arr[5]*10^2 + t2_arr[6])*t2_arr[7];
 

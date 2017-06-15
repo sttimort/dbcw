@@ -58,6 +58,7 @@ CREATE TABLE События (
 CREATE TABLE Участия_в_событиях (
   ИД_события integer REFERENCES События,
   ИД_участника integer REFERENCES Действ_сущности,
+  Комментарий text,
   PRIMARY KEY (ИД_события, ИД_участника)
 );
 
@@ -100,8 +101,8 @@ CREATE TABLE Дома (
   ИД_сюзерена integer REFERENCES Дома,
   ИД_религии integer REFERENCES Религии,
   Название text NOT NULL UNIQUE,
-  Описание_герба text NOT NULL UNIQUE,
-  Девиз text UNIQUE NOT NULL,
+  Описание_герба text,
+  Девиз text,
   Справ_информация text,
   Великий_ли boolean NOT NULL,
   Время_появления varchar(28),
@@ -113,9 +114,9 @@ CREATE TABLE Гео_объекты (
   ИД_дома_владельца integer REFERENCES Дома,
   ИД_род_замок_для integer UNIQUE REFERENCES Дома,
   ИД_правителя integer REFERENCES Действ_лица,
-  ИД_столицы integer UNIQUE REFERENCES Гео_объекты,
+  ИД_столицы integer REFERENCES Гео_объекты,
   ИД_вида integer REFERENCES Виды_ГО,
-  Название text NOT NULL UNIQUE,
+  Название text NOT NULL,
   Справ_информация text,
   Время_появления varchar(28),
   Время_исчезновения varchar(28)
@@ -184,7 +185,6 @@ CREATE UNIQUE INDEX Пол_пол_unidx ON Пол (lower(Пол));
 CREATE UNIQUE INDEX События_название_unidx ON События (lower(Название));
 CREATE UNIQUE INDEX Организации_название_unidx ON Организации (lower(Название));
 CREATE UNIQUE INDEX Типы_действ_лиц_название_unidx ON Типы_действ_лиц (lower(Название));
-CREATE UNIQUE INDEX Гео_объекты_название_unidx ON Гео_объекты (lower(Название));
 CREATE UNIQUE INDEX Боги_имя_unidx ON Боги (lower(Имя));
 CREATE UNIQUE INDEX Артефакты_название_unidx ON Артефакты (lower(Название));
 --------------------------------------------------------------------------------
